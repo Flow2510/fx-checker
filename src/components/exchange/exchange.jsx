@@ -35,7 +35,7 @@ export default function Exchange() {
                     <div className="flex">
                         <div className="flex items-center gap-4">
                             <label htmlFor="" className="w-full flex-1 flex flex-col gap-4">
-                                <input className="w-full text-2xl" type="number" placeholder="1.000"/>
+                                <input className="w-full text-2xl placeholder-white" type="number" placeholder="1.000"/>
                             </label>
                             <select name="" id="" className="bg-neutral-600 border-neutral-400 p-2 rounded-lg">
                                 <option value="" className="flex">
