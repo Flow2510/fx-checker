@@ -7,6 +7,8 @@ import HeaderBanner from './components/headerbanner/headerbanner';
 
 const Marquee = MarqueeModule.default;
 
+import currencies from './data/currencies.json'
+
 function App() {
 
   return (
@@ -14,7 +16,7 @@ function App() {
       <Header />
       <HeaderBanner />
       <Routes>
-        <Route path='/' element={<HomePage />}/>
+        <Route path='/' element={<HomePage currencies={currencies}/>}/>
       </Routes>
     </>
   )

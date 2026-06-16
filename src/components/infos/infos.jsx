@@ -3,9 +3,17 @@ import History from "../history/history"
 import Compare from "../compare/compare"
 import Favorited from "../favorited/favorited"
 import Log from "../log/log"
+import SelectInfos from "../selectinfos/selectinfos"
 
 export default function Infos() {
     const [selectValue, setSelectValue] = useState("history")
+
+    const categories = [
+        "history",
+        "compare",
+        "favorite",
+        "log"
+    ]
 
     useEffect(() => {
         console.log(selectValue)
@@ -14,12 +22,7 @@ export default function Infos() {
     return(
         <section className="flex flex-col gap-4">
             <div>
-                <select name="" id="" onChange={(e) => setSelectValue(e.target.value)} className="w-full bg-neutral-800 p-2 rounded-lg">
-                    <option className="w-full" value="history">History</option>
-                    <option className="w-full" value="compare">Compare</option>
-                    <option className="w-full" value="favorite">Favorited</option>
-                    <option className="w-full" value="log">Log</option>
-                </select>
+                <SelectInfos setSelectValue={setSelectValue} categories={categories} selectValue={selectValue}/>
             </div>
             {selectValue === "history" &&
                 <History />

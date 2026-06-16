@@ -1,7 +1,10 @@
 import { useState } from "react"
+import SelectCurrencies from "../selectcurrencies/selectcurrencies"
 
-export default function Exchange() {
+export default function Exchange({ currencies }) {
     const [favorited, setFavorited] = useState(false)
+    const [sendSelectedCurrency, setSendSelectedCurrency] = useState("USD")
+    const [receiveSelectedCurrency, setReceiveSelectedCurrency] = useState("EUR")
 
     return(
         <section className="flex flex-col gap-2">
@@ -16,14 +19,7 @@ export default function Exchange() {
                             <label htmlFor="" className="w-full flex-1 flex flex-col gap-4">
                                 <input className="w-full text-2xl text-white placeholder-white" type="number" placeholder="1.000"/>
                             </label>
-                            <select name="" id="" className="bg-neutral-600 border-neutral-400 p-2 rounded-lg">
-                                <option value="" className="flex">
-                                    USD
-                                </option>
-                                <option value="">
-                                    EUR
-                                </option>
-                            </select>
+                            <SelectCurrencies currencies={currencies} selectedCurrency={sendSelectedCurrency} setSelectedCurrency={setSendSelectedCurrency}/>
                         </div>
                     </div>
                 </div>
@@ -37,14 +33,7 @@ export default function Exchange() {
                             <label htmlFor="" className="w-full flex-1 flex flex-col gap-4">
                                 <input className="w-full text-2xl placeholder-white" type="number" placeholder="1.000"/>
                             </label>
-                            <select name="" id="" className="bg-neutral-600 border-neutral-400 p-2 rounded-lg">
-                                <option value="" className="flex">
-                                    USD
-                                </option>
-                                <option value="">
-                                    EUR
-                                </option>
-                            </select>
+                            <SelectCurrencies currencies={currencies} selectedCurrency={receiveSelectedCurrency} setSelectedCurrency={setReceiveSelectedCurrency}/>
                         </div>
                     </div>
                 </div>
