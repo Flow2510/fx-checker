@@ -1,0 +1,10 @@
+*{
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html{
+  background: #151515;
+  color: #fafafa;
+  font-family: "JetBrains Mono", monospace;
+}
