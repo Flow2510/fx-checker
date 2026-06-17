@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import History from "../history/history"
 import Compare from "../compare/compare"
 import Favorited from "../favorited/favorited"
 import Log from "../log/log"
 import SelectInfos from "../selectinfos/selectinfos"
 
-export default function Infos() {
+export default function Infos({ receiveSelectedCurrency, sendSelectedCurrency}) {
     const [selectValue, setSelectValue] = useState("history")
 
     const categories = [
@@ -15,17 +15,16 @@ export default function Infos() {
         "log"
     ]
 
-    useEffect(() => {
-        console.log(selectValue)
-    }, [selectValue])
-
     return(
         <section className="flex flex-col gap-4">
             <div>
                 <SelectInfos setSelectValue={setSelectValue} categories={categories} selectValue={selectValue}/>
             </div>
             {selectValue === "history" &&
-                <History />
+                <History 
+                    sendSelectedCurrency={sendSelectedCurrency}
+                    receiveSelectedCurrency={receiveSelectedCurrency}
+                />
             }
             {selectValue === "compare" &&
                 <Compare />
