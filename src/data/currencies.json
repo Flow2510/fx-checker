@@ -17,6 +17,7 @@
   { "code": "JPY", "name": "Japanese Yen",       "country": "Japan",          "symbol": "¥",  "flag": "/flags/jp.webp" },
   { "code": "KRW", "name": "South Korean Won",   "country": "South Korea",    "symbol": "₩",  "flag": "/flags/kr.webp" },
   { "code": "MXN", "name": "Mexican Peso",       "country": "Mexico",         "symbol": "$",  "flag": "/flags/mx.webp" },
+  { "code": "ILS", "name": "Israeli New Shekel", "country": "Israel",         "symbol": "₪",  "flag": "/flags/il.webp" },
   { "code": "MYR", "name": "Malaysian Ringgit",  "country": "Malaysia",       "symbol": "RM", "flag": "/flags/my.webp" },
   { "code": "NOK", "name": "Norwegian Krone",    "country": "Norway",         "symbol": "kr", "flag": "/flags/no.webp" },
   { "code": "NZD", "name": "New Zealand Dollar", "country": "New Zealand",    "symbol": "$",  "flag": "/flags/nz.webp" },

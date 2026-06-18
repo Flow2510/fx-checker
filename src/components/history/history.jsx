@@ -34,14 +34,6 @@ export default function History({ sendSelectedCurrency, receiveSelectedCurrency 
         load()
     }, [sendSelectedCurrency, receiveSelectedCurrency])
 
-    useEffect(() => {
-        console.log(openNumber)
-    }, [openNumber])
-
-    useEffect(() => {
-        console.log(lastNumber)
-    }, [lastNumber])
-
     if (loading) return <p>Loading...</p>
 
     return(
@@ -87,7 +79,7 @@ export default function History({ sendSelectedCurrency, receiveSelectedCurrency 
                 {time.map((t, i) => (
                     <button 
                         key={t + i} 
-                        className={`p-2 rounded-lg${timeHistory === t ? " bg-neutral-700 text-white" : ""}`} 
+                        className={`p-2 rounded-lg${timeHistory === t ? " bg-neutral-700 text-white" : " text-neutral-400"}`} 
                         value={t} 
                         onClick={(e) => setTimeHistory(e.target.value)}
                     >

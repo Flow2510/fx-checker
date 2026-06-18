@@ -16,10 +16,6 @@ export default function Exchange({ currencies, sendSelectedCurrency, setSendSele
         loadChangeRatio()
     },[sendSelectedCurrency, receiveSelectedCurrency])
 
-    useEffect(() => {
-        console.log(changeRatio)
-    }, [changeRatio])
-
     return(
         <section className="flex flex-col gap-2">
             <div>
@@ -42,8 +38,8 @@ export default function Exchange({ currencies, sendSelectedCurrency, setSendSele
                         </div>
                     </div>
                 </div>
-                <div className="self-center bg-neutral-700 p-4 rounded-lg border border-neutral-600 active:scale-[1.1]" >
-                    <img src="/icon-exchange-vertical.svg" alt="" />
+                <div className="self-center bg-neutral-700 p-4 rounded-lg border border-neutral-600 active:scale-[1.1] active:bg-lime-400" >
+                    <img className="active:brightness-0" src="/icon-exchange-vertical.svg" alt="" />
                 </div>
                 <div className="bg-neutral-700 p-4 rounded-2xl flex flex-col gap-4">
                     <h3 className="uppercase text-neutral-400">Receive</h3>
@@ -54,7 +50,7 @@ export default function Exchange({ currencies, sendSelectedCurrency, setSendSele
                                     readOnly
                                     className="w-full text-2xl placeholder-lime-400 px-2 py-1 rounded-lg focus:outline-none" 
                                     type="number" 
-                                    placeholder={sendInput * changeRatio}/>
+                                    placeholder={(sendInput * changeRatio).toFixed(4)}/>
                             </label>
                             <SelectCurrencies currencies={currencies} selectedCurrency={receiveSelectedCurrency} setSelectedCurrency={setReceiveSelectedCurrency}/>
                         </div>
@@ -72,7 +68,9 @@ export default function Exchange({ currencies, sendSelectedCurrency, setSendSele
                             <span><i className="fa-solid fa-star text-[0.6rem]"></i></span>
                             <span>favorited</span>
                         </button>
-                        <button className="text-xs uppercase border-lime-400 rounded-lg border p-2">log conversion</button>
+                        <button className="text-xs uppercase border-lime-400 rounded-lg border p-2 active:bg-lime-400 active:text-black">
+                            log conversion
+                        </button>
                     </div>
                 </div>
             </div>

@@ -8,15 +8,30 @@ import HeaderBanner from './components/headerbanner/headerbanner';
 const Marquee = MarqueeModule.default;
 
 import currencies from './data/currencies.json'
+import { useEffect, useState } from 'react';
+import { getPopularRate, getYesterdayPopularRate } from './services/api';
 
 function App() {
+      const [popularRates, setPopularRates] = useState(null)
+      const [yesterdayPopularRates, setYesterdayPopularRates] = useState(null)
 
-  return (
+      const loadPopular = async () => {
+          const r = await getPopularRate("USD")
+          const d = await getYesterdayPopularRate("USD")
+          setPopularRates(r)
+          setYesterdayPopularRates(d)
+      }
+
+      useEffect(() => {
+          loadPopular()
+      }, [])
+
+    return (
     <>
       <Header />
-      <HeaderBanner />
+      <HeaderBanner currencies={currencies} popularRates={popularRates} yesterdayPopularRates={yesterdayPopularRates}/>
       <Routes>
-        <Route path='/' element={<HomePage currencies={currencies}/>}/>
+        <Route path='/' element={<HomePage currencies={currencies} popularRates={popularRates} yesterdayPopularRates={yesterdayPopularRates}/>}/>
       </Routes>
     </>
   )

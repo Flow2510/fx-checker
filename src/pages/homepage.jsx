@@ -2,7 +2,7 @@ import { useState } from "react";
 import Exchange from "../components/exchange/exchange";
 import Infos from "../components/infos/infos";
 
-export default function HomePage({ currencies }) {
+export default function HomePage({ currencies, popularRates, yesterdayPopularRates }) {
     const [sendSelectedCurrency, setSendSelectedCurrency] = useState({ "code": "USD", "name": "US Dollar", "country": "United States", "symbol": "$", "flag": "/flags/us.webp" })
     const [receiveSelectedCurrency, setReceiveSelectedCurrency] = useState({ "code": "EUR", "name": "Euro", "country": "Eurozone", "symbol": "€", "flag": "/flags/eu.webp" })
 
@@ -16,6 +16,9 @@ export default function HomePage({ currencies }) {
                 setReceiveSelectedCurrency={setReceiveSelectedCurrency}
             />
             <Infos 
+                currencies={currencies}
+                popularRates={popularRates} 
+                yesterdayPopularRates={yesterdayPopularRates}
                 sendSelectedCurrency={sendSelectedCurrency}
                 receiveSelectedCurrency={receiveSelectedCurrency}
             />
