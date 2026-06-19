@@ -33,7 +33,7 @@ export default function SelectCurrencies({ currencies, selectedCurrency, setSele
                         <div>
                             <label className="flex border rounded-lg p-2 gap-4" htmlFor="">
                                 <img src="/public/icon-search.svg" alt="" />
-                                <input type="text" placeholder="Search currencies..." />
+                                <input type="text" className="outline-none" placeholder="Search currencies..." />
                             </label>
                         </div>
                         <div className="flex flex-col gap-4">

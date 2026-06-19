@@ -1,30 +1,21 @@
-export default function Favorited(){
-    const favorites = [
-        "",
-        "",
-        "",
-        "",
-        ""
-    ]
+import { useEffect } from "react"
+import FavoriteItem from "../favoriteitem/favoriteitem"
+
+export default function Favorited({ favoriteChange }){
+    if (!favoriteChange) return
 
     return(
         <div className="bg-neutral-800 p-4 rounded-lg flex flex-col gap-4">
             <div className="uppercase flex justify-between items-center">
                 <h3>Pinned Pairs</h3>
-                <p className="text-xs text-neutral-400">10 Favorites</p>
+                <p className=" text-neutral-400">{favoriteChange?.length}</p>
             </div>
             <div className="flex flex-col gap-2">
-                {favorites.map((f, i) => (
-                    <div key={i + f} className="flex items-center gap-4 bg-neutral-700 rounded-lg p-2">
-                        <p className="flex items-center gap-2 uppercase text-xs">pair <img src="/icon-arrow-right.svg" alt="" /> pair</p>
-                        <div className="flex-1 flex flex-col items-end">
-                            <p>1.152</p>
-                            <p className="text-xs">+0.16%</p>
-                        </div>
-                        <div className="p-2 border rounded-lg">
-                            <i className="fa-solid fa-star"></i>
-                        </div>
-                    </div>
+                {favoriteChange?.map((f, i) => (
+                    <FavoriteItem 
+                        key={i + f.initialCurrency + f.currencyChange}
+                        f={f}
+                    />
                 ))}
             </div>
         </div>

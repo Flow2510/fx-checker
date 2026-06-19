@@ -2,14 +2,21 @@ import { useEffect, useState } from "react"
 import SelectCurrencies from "../selectcurrencies/selectcurrencies"
 import { getRate } from "../../services/api"
 
-export default function Exchange({ currencies, sendSelectedCurrency, setSendSelectedCurrency, receiveSelectedCurrency, setReceiveSelectedCurrency }) {
-    const [favorited, setFavorited] = useState(false)
+export default function Exchange({ addToFavorite, favoriteChange, currencies, sendSelectedCurrency, setSendSelectedCurrency, receiveSelectedCurrency, setReceiveSelectedCurrency }) {
+    const favorited = favoriteChange.some(favorite =>    
+        favorite.initialCurrency === sendSelectedCurrency.code &&
+        favorite.currencyChange === receiveSelectedCurrency.code
+    );
     const [changeRatio, setChangeRatio] = useState(null)
     const [sendInput, setSendInput] = useState(1)
 
     const loadChangeRatio = async () => {
         const r = await getRate(sendSelectedCurrency.code, receiveSelectedCurrency.code)
         setChangeRatio(r.rates[receiveSelectedCurrency.code])
+    }
+
+    const handleClickAddFavorite = () => {
+        addToFavorite(sendSelectedCurrency.code, receiveSelectedCurrency.code)
     }
 
     useEffect(() => {
@@ -50,7 +57,7 @@ export default function Exchange({ currencies, sendSelectedCurrency, setSendSele
                                     readOnly
                                     className="w-full text-2xl placeholder-lime-400 px-2 py-1 rounded-lg focus:outline-none" 
                                     type="number" 
-                                    placeholder={(sendInput * changeRatio).toFixed(4)}/>
+                                    placeholder={sendSelectedCurrency === receiveSelectedCurrency ? 1 : (sendInput * changeRatio).toFixed(4)}/>
                             </label>
                             <SelectCurrencies currencies={currencies} selectedCurrency={receiveSelectedCurrency} setSelectedCurrency={setReceiveSelectedCurrency}/>
                         </div>
@@ -62,7 +69,7 @@ export default function Exchange({ currencies, sendSelectedCurrency, setSendSele
                     }
                     <div className="flex gap-4">
                         <button 
-                            onClick={() => setFavorited(prev => !prev)} 
+                            onClick={handleClickAddFavorite} 
                             className={`border flex gap-1 items-center uppercase text-xs border-lime-400 rounded-lg p-2 ${favorited? " bg-lime-400 text-black" : ""}`}
                         >
                             <span><i className="fa-solid fa-star text-[0.6rem]"></i></span>

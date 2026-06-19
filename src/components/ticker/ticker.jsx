@@ -30,7 +30,7 @@ export default function Ticker({ currencies, popularRates, yesterdayPopularRates
                                 const yesterdayValue = yesterdayPopularRates.rates[currency];
                                 const diff = ((rate - yesterdayValue) / yesterdayValue) * 100;
                                 
-                                return <span className={`${diff > 0 ? "text-green-500" : "text-red-500"}`}>{diff > 0 ? '+' : ''}${diff.toFixed(2)}</span>;
+                                return <span className={`${diff > 0 ? "text-green-500" : "text-red-500"}`}>{diff > 0 ? '+' : ''}{diff.toFixed(2)}%</span>;
                             })()}
                         </p>
                     </div>
