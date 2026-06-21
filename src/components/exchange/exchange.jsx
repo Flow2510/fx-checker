@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import SelectCurrencies from "../selectcurrencies/selectcurrencies"
 import { getRate } from "../../services/api"
 
-export default function Exchange({ addToFavorite, favoriteChange, currencies, sendSelectedCurrency, setSendSelectedCurrency, receiveSelectedCurrency, setReceiveSelectedCurrency }) {
+export default function Exchange({ addToHistory ,addToFavorite, favoriteChange, currencies, sendSelectedCurrency, setSendSelectedCurrency, receiveSelectedCurrency, setReceiveSelectedCurrency }) {
     const favorited = favoriteChange.some(favorite =>    
         favorite.initialCurrency === sendSelectedCurrency.code &&
         favorite.currencyChange === receiveSelectedCurrency.code
@@ -11,12 +11,32 @@ export default function Exchange({ addToFavorite, favoriteChange, currencies, se
     const [sendInput, setSendInput] = useState(1)
 
     const loadChangeRatio = async () => {
+        if (sendSelectedCurrency.code === receiveSelectedCurrency.code) return;
+
         const r = await getRate(sendSelectedCurrency.code, receiveSelectedCurrency.code)
         setChangeRatio(r.rates[receiveSelectedCurrency.code])
     }
 
     const handleClickAddFavorite = () => {
+        if (sendSelectedCurrency.code === receiveSelectedCurrency.code) return;
+
         addToFavorite(sendSelectedCurrency.code, receiveSelectedCurrency.code)
+    }
+
+    const handleClickAddHistory = () => {
+        if (sendSelectedCurrency.code === receiveSelectedCurrency.code) return;
+
+        addToHistory(sendSelectedCurrency.code, receiveSelectedCurrency.code, changeRatio, sendInput)
+    }
+
+    const exchangeCurrency = () => {
+        const awaitCurrencies = {
+            "send": sendSelectedCurrency,
+            "receive": receiveSelectedCurrency
+        }
+
+        setSendSelectedCurrency(awaitCurrencies.receive)
+        setReceiveSelectedCurrency(awaitCurrencies.send)
     }
 
     useEffect(() => {
@@ -45,9 +65,12 @@ export default function Exchange({ addToFavorite, favoriteChange, currencies, se
                         </div>
                     </div>
                 </div>
-                <div className="self-center bg-neutral-700 p-4 rounded-lg border border-neutral-600 active:scale-[1.1] active:bg-lime-400" >
+                <button 
+                    onClick={exchangeCurrency}
+                    className="self-center bg-neutral-700 p-4 rounded-lg border border-neutral-600 active:scale-[1.1] active:bg-lime-400" 
+                >
                     <img className="active:brightness-0" src="/icon-exchange-vertical.svg" alt="" />
-                </div>
+                </button>
                 <div className="bg-neutral-700 p-4 rounded-2xl flex flex-col gap-4">
                     <h3 className="uppercase text-neutral-400">Receive</h3>
                     <div className="flex">
@@ -57,7 +80,7 @@ export default function Exchange({ addToFavorite, favoriteChange, currencies, se
                                     readOnly
                                     className="w-full text-2xl placeholder-lime-400 px-2 py-1 rounded-lg focus:outline-none" 
                                     type="number" 
-                                    placeholder={sendSelectedCurrency === receiveSelectedCurrency ? 1 : (sendInput * changeRatio).toFixed(4)}/>
+                                    placeholder={sendSelectedCurrency.code === receiveSelectedCurrency.code ? 1 : (sendInput * changeRatio).toFixed(4)}/>
                             </label>
                             <SelectCurrencies currencies={currencies} selectedCurrency={receiveSelectedCurrency} setSelectedCurrency={setReceiveSelectedCurrency}/>
                         </div>
@@ -75,7 +98,7 @@ export default function Exchange({ addToFavorite, favoriteChange, currencies, se
                             <span><i className="fa-solid fa-star text-[0.6rem]"></i></span>
                             <span>favorited</span>
                         </button>
-                        <button className="text-xs uppercase border-lime-400 rounded-lg border p-2 active:bg-lime-400 active:text-black">
+                        <button onClick={handleClickAddHistory} className="text-xs uppercase border-lime-400 rounded-lg border p-2 active:bg-lime-400 active:text-black">
                             log conversion
                         </button>
                     </div>

@@ -1,7 +1,6 @@
-import { useEffect } from "react"
 import FavoriteItem from "../favoriteitem/favoriteitem"
 
-export default function Favorited({ favoriteChange }){
+export default function Favorited({ favoriteChange, addToFavorite }){
     if (!favoriteChange) return
 
     return(
@@ -10,14 +9,23 @@ export default function Favorited({ favoriteChange }){
                 <h3>Pinned Pairs</h3>
                 <p className=" text-neutral-400">{favoriteChange?.length}</p>
             </div>
-            <div className="flex flex-col gap-2">
-                {favoriteChange?.map((f, i) => (
-                    <FavoriteItem 
-                        key={i + f.initialCurrency + f.currencyChange}
-                        f={f}
-                    />
-                ))}
-            </div>
+            {favoriteChange.length === 0?
+                <div>
+                    <p>
+                        No Favorite
+                    </p>
+                </div>
+            :
+                <div className="flex flex-col gap-2">
+                    {favoriteChange?.map((f, i) => (
+                        <FavoriteItem 
+                            key={i + f.initialCurrency + f.currencyChange}
+                            f={f}
+                            addToFavorite={addToFavorite}
+                        />
+                    ))}
+                </div>
+            }
         </div>
     )
 }

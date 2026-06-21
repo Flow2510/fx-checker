@@ -5,7 +5,7 @@ import Favorited from "../favorited/favorited"
 import Log from "../log/log"
 import SelectInfos from "../selectinfos/selectinfos"
 
-export default function Infos({ favoriteChange, receiveSelectedCurrency, sendSelectedCurrency, popularRates, yesterdayPopularRates, currencies }) {
+export default function Infos({ history, setHistory, addToFavorite, favoriteChange, receiveSelectedCurrency, sendSelectedCurrency, popularRates, yesterdayPopularRates, currencies }) {
     const [selectValue, setSelectValue] = useState("history")
 
     const categories = [
@@ -34,11 +34,15 @@ export default function Infos({ favoriteChange, receiveSelectedCurrency, sendSel
             }
             {selectValue === "favorite" &&
                 <Favorited 
+                    addToFavorite={addToFavorite}
                     favoriteChange={favoriteChange}
                 />
             }
             {selectValue === "log" &&
-                <Log />
+                <Log 
+                    history={history}
+                    setHistory={setHistory}
+                />
             }
         </section>
     )

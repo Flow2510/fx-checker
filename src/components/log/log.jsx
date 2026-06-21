@@ -1,33 +1,89 @@
-export default function Log(){
-    const logs = [
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-    ]
+import { useEffect, useState } from "react"
+
+export default function Log({ history, setHistory }){
+    const [deleteLogModal, setDeleteLogModal] = useState(false)
+    const [clearAllModal, setClearAllModal] = useState(false)
+
+    useEffect(() => {
+        console.log(history)
+    }, [history])
+
+    const deleteLog = (id) => {
+        setHistory(prev => 
+            prev.filter(item => item.id === id)
+        );
+    };
+
+    const clearHistory = () => {
+        setHistory([])
+        setClearAllModal(prev => !prev)
+    };
+
+    if (!history) return
+
+    const sortedHistory = [...history].sort(
+        (a, b) => new Date(b.date) - new Date(a.date)
+    );
 
     return(
         <div className="bg-neutral-800 p-4 rounded-lg flex flex-col gap-4">
-            <div className="uppercase flex justify-between items-center">
-                <h3>Pinned Pairs</h3>
-                <p className="text-xs text-neutral-400">10 Favorites</p>
+            <div className="uppercase flex flex-col gap-2">
+                <h3>Conversion Log</h3>
+                <div className="flex justify-between items-center">
+                    <p className="text-xs text-neutral-400">{history.length} Logs</p>
+                    <button className="text-sm border p-2 rounded-lg bg-neutral-700 border-neutral-600 uppercase" onClick={() => setClearAllModal(prev => !prev)}>
+                        Clear All
+                    </button>
+                </div>                
             </div>
+            {clearAllModal &&
+                <div>
+                    <div className="z-50 fixed top-0 left-0 w-full h-dvh bg-[rgba(0,0,0,0.9)] flex items-center justify-center">
+                        <div className="bg-neutral-900 p-6 flex flex-col gap-4 rounded-lg">
+                            <p>Remove All History ?</p>
+                            <div className="flex justify-center gap-4">
+                                <button className="border-lime-400 px-3 py-2 uppercase border rounded-sm text-sm" onClick={clearHistory}>
+                                    Remove
+                                </button>
+                                <button className="border-lime-400 px-3 py-2 uppercase border rounded-sm text-sm active:bg-lime-400 active:text-black" onClick={() => setClearAllModal(prev => !prev)}>
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
             <div className="flex flex-col gap-2">
-                {logs.map((l, i) => (
-                    <div key={i + l} className="flex items-center gap-4 bg-neutral-700 rounded-lg p-2">
+                {sortedHistory.map((log, i) => (
+                    <div key={log.id} className="flex items-center gap-4 bg-neutral-700 rounded-lg p-2">
                         <div>
-                            <p className="text-xs uppercase">Times</p>
-                            <p className="flex items-center gap-2 uppercase text-xs">pair <img src="/icon-arrow-right.svg" alt="" /> pair</p>
+                            <p className="text-xs uppercase">{log.date}</p>
+                            <p className="flex items-center gap-2 uppercase text-xs">{log.from} <img src="/icon-arrow-right.svg" alt="" /> {log.to}</p>
                         </div>
                         <div className="flex-1 flex flex-col items-end">
-                            <p>1000.00</p>
-                            <p className="text-xs text-lime-400">853.02</p>
+                            <p>{log.quantity}</p>
+                            <p className="text-xs text-lime-400">{(log.quantity * log.rate).toFixed(4)}</p>
                         </div>
-                        <div className="p-2">
+                        <button className="p-2" onClick={() => setDeleteLogModal(prev => !prev)}>
                             <img src='/icon-delete.svg' alt="" />
-                        </div>
+                        </button>
+                        {deleteLogModal &&
+                            <div>
+                                <div className="z-50 fixed top-0 left-0 w-full h-dvh bg-[rgba(0,0,0,0.9)] flex items-center justify-center">
+                                    <div className="bg-neutral-900 p-6 flex flex-col gap-4 rounded-lg">
+                                        <p>Remove of History ?</p>
+                                        <div className="flex justify-center gap-4">
+                                            <button className="border-lime-400 px-3 py-2 uppercase border rounded-sm text-sm" onClick={deleteLog}>
+                                                Remove
+                                            </button>
+                                            <button className="border-lime-400 px-3 py-2 uppercase border rounded-sm text-sm active:bg-lime-400 active:text-black" onClick={() => deleteLogModal(prev => !prev)}>
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
                     </div>
                 ))}
             </div>

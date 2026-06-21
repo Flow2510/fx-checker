@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react"
 import { getRate } from "../../services/api"
 
-export default function FavoriteItem({ f }){
+export default function FavoriteItem({ f, addToFavorite }){
     const [change, setChange] = useState(null)
+    const [openModal, setOpenModal] = useState(false)
+
+    const deleteFavorite = () => {
+        addToFavorite(f.initialCurrency, f.currencyChange)
+    }
 
     const loadChange = async () => {
         const d = getRate(f.initialCurrency, f.currencyChange)
@@ -27,9 +32,24 @@ export default function FavoriteItem({ f }){
                 <p>{change.rates[f.currencyChange]}</p>
                 <p className="text-xs">+0.16%</p>
             </div>
-            <div className="p-2 border border-lime-400 rounded-lg">
+            <button className="p-2 border border-lime-400 rounded-lg" onClick={() => setOpenModal(prev => !prev)}>
                 <img src="/public/icon-star-filled.svg" alt="" />
-            </div>
+            </button>
+            {openModal &&
+                <div className="z-50 fixed top-0 left-0 w-full h-dvh bg-[rgba(0,0,0,0.9)] flex items-center justify-center">
+                    <div className="bg-neutral-900 p-6 flex flex-col gap-4 rounded-lg">
+                        <p>Remove of favorite ?</p>
+                        <div className="flex justify-center gap-4">
+                            <button className="border-lime-400 px-3 py-2 uppercase border rounded-sm text-sm" onClick={deleteFavorite}>
+                                Remove
+                            </button>
+                            <button className="border-lime-400 px-3 py-2 uppercase border rounded-sm text-sm active:bg-lime-400 active:text-black" onClick={() => setOpenModal()}>
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     )
 }

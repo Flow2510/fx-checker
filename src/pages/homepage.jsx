@@ -9,6 +9,10 @@ export default function HomePage({ currencies, popularRates, yesterdayPopularRat
         const savedFavorites = localStorage.getItem("favoriteChange");
         return savedFavorites ? JSON.parse(savedFavorites) : [];
     });
+    const [history, setHistory] = useState(() => {
+        const savedHistory = localStorage.getItem("savedHistory");
+        return savedHistory ? JSON.parse(savedHistory) : [];
+    })
 
     const addToFavorite = (initialCurrency, currencyChange) => {
         setFavoriteChange(prev => {
@@ -27,7 +31,6 @@ export default function HomePage({ currencies, popularRates, yesterdayPopularRat
                 );
             }
 
-            // Ajoute le favori
             return [
                 ...prev,
                 {
@@ -37,6 +40,27 @@ export default function HomePage({ currencies, popularRates, yesterdayPopularRat
             ];
         });
     };
+
+    const addToHistory = (initialCurrency, currencyChange, rate, quantity) => {
+        setHistory(prev => [
+        ...prev,
+            {
+                from: initialCurrency,
+                to: currencyChange,
+                rate,
+                quantity,
+                id: crypto.randomUUID(),
+                date: new Date().toLocaleString()
+            }
+        ]);
+    };
+
+    useEffect(() => {
+        localStorage.setItem(
+            "savedHistory",
+            JSON.stringify(history)
+        );
+    }, [history]);
 
     useEffect(() => {
         localStorage.setItem(
@@ -48,6 +72,7 @@ export default function HomePage({ currencies, popularRates, yesterdayPopularRat
     return(
         <main className="px-4 py-6 flex flex-col gap-8">
             <Exchange 
+                addToHistory={addToHistory}
                 addToFavorite={addToFavorite}
                 favoriteChange={favoriteChange}
                 currencies={currencies} 
@@ -57,6 +82,9 @@ export default function HomePage({ currencies, popularRates, yesterdayPopularRat
                 setReceiveSelectedCurrency={setReceiveSelectedCurrency}
             />
             <Infos 
+                history={history}
+                setHistory={setHistory}
+                addToFavorite={addToFavorite}
                 favoriteChange={favoriteChange}
                 currencies={currencies}
                 popularRates={popularRates} 

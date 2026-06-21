@@ -8,11 +8,15 @@ export default function History({ sendSelectedCurrency, receiveSelectedCurrency 
     const [loading, setLoading] = useState(true)
 
     const loadOpenNumber = async () => {
+        if (sendSelectedCurrency.code === receiveSelectedCurrency.code) return;
+
         const r = await getRate(sendSelectedCurrency.code, receiveSelectedCurrency.code)
         setOpenNumber(r.rates[receiveSelectedCurrency.code])
     }
 
     const loadLastNumber = async () => {
+        if (sendSelectedCurrency.code === receiveSelectedCurrency.code) return;
+
         const r = await getYesterdayRate(sendSelectedCurrency.code, receiveSelectedCurrency.code)
         setLastNumber(r.rates[receiveSelectedCurrency.code])
     }
@@ -35,6 +39,8 @@ export default function History({ sendSelectedCurrency, receiveSelectedCurrency 
     }, [sendSelectedCurrency, receiveSelectedCurrency])
 
     if (loading) return <p>Loading...</p>
+
+    if (sendSelectedCurrency.code === receiveSelectedCurrency.code) return;
 
     return(
         <div className="flex flex-col gap-4">
