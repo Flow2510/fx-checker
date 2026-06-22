@@ -44,49 +44,51 @@ export default function Exchange({ addToHistory ,addToFavorite, favoriteChange, 
     },[sendSelectedCurrency, receiveSelectedCurrency])
 
     return(
-        <section className="flex flex-col gap-2">
+        <section className="flex flex-col gap-2 md:gap-4">
             <div>
                 <h2 className="text-xl uppercase">Check The Rate</h2>
             </div>
             <div className="flex flex-col gap-4 bg-neutral-800 p-4 rounded-2xl">
-                <div className="bg-neutral-700 p-4 rounded-2xl flex flex-col gap-4 border border-neutral-600">
-                    <h3 className="uppercase text-neutral-400">Send</h3>
-                    <div className="flex">
-                        <div className="flex items-center gap-4">
-                            <label htmlFor="" className="w-full flex-1 flex flex-col gap-4">
-                                <input 
-                                    onChange={(e) => setSendInput(e.target.value)}
-                                    className="w-full text-2xl text-white placeholder-white px-2 py-1 rounded-lg focus:outline-lime-400 focus:outline-2"  
-                                    type="number" 
-                                    placeholder={sendInput}
-                                />
-                            </label>
-                            <SelectCurrencies currencies={currencies} selectedCurrency={sendSelectedCurrency} setSelectedCurrency={setSendSelectedCurrency}/>
+                <div className="flex flex-col gap-4 md:flex-row">
+                    <div className="bg-neutral-700 p-4 rounded-2xl flex flex-col gap-4 border border-neutral-600">
+                        <h3 className="uppercase text-neutral-400">Send</h3>
+                        <div className="flex">
+                            <div className="flex items-center gap-4">
+                                <label htmlFor="" className="w-full flex-1 flex flex-col gap-4">
+                                    <input 
+                                        onChange={(e) => setSendInput(e.target.value)}
+                                        className="w-full text-2xl text-white placeholder-white px-2 py-1 rounded-lg focus:outline-lime-400 focus:outline-2"  
+                                        type="number" 
+                                        placeholder={sendInput}
+                                    />
+                                </label>
+                                <SelectCurrencies currencies={currencies} selectedCurrency={sendSelectedCurrency} setSelectedCurrency={setSendSelectedCurrency}/>
+                            </div>
+                        </div>
+                    </div>
+                    <button 
+                        onClick={exchangeCurrency}
+                        className="self-center bg-neutral-700 p-4 rounded-lg border border-neutral-600 active:scale-[1.1] active:bg-lime-400" 
+                    >
+                        <img className="active:brightness-0" src="/icon-exchange-vertical.svg" alt="" />
+                    </button>
+                    <div className="bg-neutral-700 p-4 rounded-2xl flex flex-col gap-4">
+                        <h3 className="uppercase text-neutral-400">Receive</h3>
+                        <div className="flex">
+                            <div className="flex items-center gap-4">
+                                <label htmlFor="" className="w-full flex-1 flex flex-col gap-4">
+                                    <input 
+                                        readOnly
+                                        className="w-full text-2xl placeholder-lime-400 px-2 py-1 rounded-lg focus:outline-none" 
+                                        type="number" 
+                                        placeholder={sendSelectedCurrency.code === receiveSelectedCurrency.code ? 1 : (sendInput * changeRatio).toFixed(4)}/>
+                                </label>
+                                <SelectCurrencies currencies={currencies} selectedCurrency={receiveSelectedCurrency} setSelectedCurrency={setReceiveSelectedCurrency}/>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <button 
-                    onClick={exchangeCurrency}
-                    className="self-center bg-neutral-700 p-4 rounded-lg border border-neutral-600 active:scale-[1.1] active:bg-lime-400" 
-                >
-                    <img className="active:brightness-0" src="/icon-exchange-vertical.svg" alt="" />
-                </button>
-                <div className="bg-neutral-700 p-4 rounded-2xl flex flex-col gap-4">
-                    <h3 className="uppercase text-neutral-400">Receive</h3>
-                    <div className="flex">
-                        <div className="flex items-center gap-4">
-                            <label htmlFor="" className="w-full flex-1 flex flex-col gap-4">
-                                <input 
-                                    readOnly
-                                    className="w-full text-2xl placeholder-lime-400 px-2 py-1 rounded-lg focus:outline-none" 
-                                    type="number" 
-                                    placeholder={sendSelectedCurrency.code === receiveSelectedCurrency.code ? 1 : (sendInput * changeRatio).toFixed(4)}/>
-                            </label>
-                            <SelectCurrencies currencies={currencies} selectedCurrency={receiveSelectedCurrency} setSelectedCurrency={setReceiveSelectedCurrency}/>
-                        </div>
-                    </div>
-                </div>
-                <div className="flex flex-col items-center gap-2 border-t border-white/40 border-dashed pt-2">
+                <div className="flex flex-col items-center gap-2 border-t border-white/40 border-dashed pt-2 md:flex-row md:justify-between md:pt-4">
                     {changeRatio &&
                         <p>1 {sendSelectedCurrency.code} = {changeRatio} {receiveSelectedCurrency.code}</p>
                     }

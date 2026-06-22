@@ -70,7 +70,8 @@ export default function HomePage({ currencies, popularRates, yesterdayPopularRat
     }, [favoriteChange]);
 
     return(
-        <main className="px-4 py-6 flex flex-col gap-8">
+        <main className="px-4 py-6 flex flex-col gap-8 max-w-275 m-auto md:px-6 md:py-8"
+        >
             <Exchange 
                 addToHistory={addToHistory}
                 addToFavorite={addToFavorite}
@@ -95,3 +96,9 @@ export default function HomePage({ currencies, popularRates, yesterdayPopularRat
         </main>
     )
 }
+
+// a faire :
+
+// -remplir les inputs automatiquement quand on clique sur un favori ou sur une devise dans la liste compare
+// -verifier erreurs et les gérer 
+// -css pour tablettes et grands ecrans

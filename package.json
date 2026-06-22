@@ -1,5 +1,5 @@
 {
-  "name": "test",
+  "name": "Fx_checker",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -15,7 +15,9 @@
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-fast-marquee": "^1.6.5",
+    "react-is": "^19.2.7",
     "react-router-dom": "^7.17.0",
+    "recharts": "^3.8.1",
     "tailwindcss": "^4.3.1"
   },
   "devDependencies": {

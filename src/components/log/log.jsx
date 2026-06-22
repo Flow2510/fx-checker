@@ -1,12 +1,8 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 export default function Log({ history, setHistory }){
     const [deleteLogModal, setDeleteLogModal] = useState(false)
     const [clearAllModal, setClearAllModal] = useState(false)
-
-    useEffect(() => {
-        console.log(history)
-    }, [history])
 
     const deleteLog = (id) => {
         setHistory(prev => 
@@ -56,13 +52,15 @@ export default function Log({ history, setHistory }){
             <div className="flex flex-col gap-2">
                 {sortedHistory.map((log, i) => (
                     <div key={log.id} className="flex items-center gap-4 bg-neutral-700 rounded-lg p-2">
-                        <div>
-                            <p className="text-xs uppercase">{log.date}</p>
-                            <p className="flex items-center gap-2 uppercase text-xs">{log.from} <img src="/icon-arrow-right.svg" alt="" /> {log.to}</p>
-                        </div>
-                        <div className="flex-1 flex flex-col items-end">
-                            <p>{log.quantity}</p>
-                            <p className="text-xs text-lime-400">{(log.quantity * log.rate).toFixed(4)}</p>
+                        <div className="flex items-center gap-4 flex-1 justify-between">
+                            <div className="md:flex md:gap-4">
+                                <p className="text-xs uppercase">{log.date}</p>
+                                <p className="flex items-center gap-2 uppercase text-xs">{log.from} <img src="/icon-arrow-right.svg" alt="" /> {log.to}</p>
+                            </div>
+                            <div className="flex flex-col items-end md:flex-row md:gap-4 md:items-center">
+                                <p>{log.quantity}</p>
+                                <p className="text-xs text-lime-400 md:text-base">{(log.quantity * log.rate).toFixed(4)}</p>
+                            </div>
                         </div>
                         <button className="p-2" onClick={() => setDeleteLogModal(prev => !prev)}>
                             <img src='/icon-delete.svg' alt="" />
