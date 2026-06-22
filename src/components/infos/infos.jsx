@@ -18,7 +18,7 @@ export default function Infos({ history, setHistory, addToFavorite, favoriteChan
     return(
         <section className="flex flex-col gap-4">
             <div>
-                <SelectInfos setSelectValue={setSelectValue} categories={categories} selectValue={selectValue}/>
+                <SelectInfos setSelectValue={setSelectValue} categories={categories} selectValue={selectValue} history={history} favoriteChange={favoriteChange}/>
             </div>
             {selectValue === "history" &&
                 <History 

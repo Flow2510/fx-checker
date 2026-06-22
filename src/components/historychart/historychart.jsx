@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { getHistoryRate } from "../../services/api"
 import { AreaChart, Area, Line, XAxis, YAxis, Tooltip } from "recharts";
-import { color } from "motion";
 
 
 export default function HistoryChart({ lastNumber, timeHistory, sendSelectedCurrency, receiveSelectedCurrency }){
