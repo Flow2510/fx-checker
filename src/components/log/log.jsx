@@ -17,6 +17,11 @@ export default function Log({ history, setHistory }){
 
     if (!history) return
 
+    if (history.length === 0) return <div className="flex flex-col gap-2 p-8 text-center max-w-115 m-auto">
+        <p>No conversions logged yet</p>
+        <p className="text-xs text-neutral-400">Every conversion is recorded here automatically when you tap LOG CONVERSION. Your log is private to this session and this browser.</p>
+    </div>
+
     const sortedHistory = [...history].sort(
         (a, b) => new Date(b.date) - new Date(a.date)
     );

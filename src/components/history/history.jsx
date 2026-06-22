@@ -41,7 +41,10 @@ export default function History({ sendSelectedCurrency, receiveSelectedCurrency 
 
     if (loading) return <p>Loading...</p>
 
-    if (sendSelectedCurrency.code === receiveSelectedCurrency.code) return;
+    if (sendSelectedCurrency.code === receiveSelectedCurrency.code) return <div className="text-center p-8 flex flex-col gap-2 max-w-115 m-auto">
+        <p className="">No chart data available</p>
+        <p className="text-xs text-neutral-400">We couldn't load rate history for {sendSelectedCurrency.code}/{receiveSelectedCurrency.code} right now. Please choose another currency to compare.</p>
+    </div>;
 
     return(
         <div className="flex flex-col gap-4">

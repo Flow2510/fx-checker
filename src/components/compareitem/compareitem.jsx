@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function CompareItem({ test, sendSelectedCurrency, currencies }){
+export default function CompareItem({ sendInput, test, sendSelectedCurrency, currencies }){
     const changeCurrency = currencies.find((cur) => cur.code === test[0])
     const [isFavorited, setIsFavorited] = useState(false)
 
@@ -14,7 +14,7 @@ export default function CompareItem({ test, sendSelectedCurrency, currencies }){
             <div className="flex-1">
                 <div className="flex justify-between">
                     <p className="uppercase">{test[0]}</p>
-                    <p>{(test[1] * 1000).toFixed(2)}</p>
+                    <p>{(test[1] * sendInput).toFixed(2)}</p>
                 </div>
                 <div className="text-neutral-400 flex justify-between text-xs">
                     <p>{changeCurrency?.name}</p>

@@ -2,13 +2,12 @@ import { useEffect, useState } from "react"
 import SelectCurrencies from "../selectcurrencies/selectcurrencies"
 import { getRate } from "../../services/api"
 
-export default function Exchange({ addToHistory ,addToFavorite, favoriteChange, currencies, sendSelectedCurrency, setSendSelectedCurrency, receiveSelectedCurrency, setReceiveSelectedCurrency }) {
+export default function Exchange({ sendInput, setSendInput, addToHistory ,addToFavorite, favoriteChange, currencies, sendSelectedCurrency, setSendSelectedCurrency, receiveSelectedCurrency, setReceiveSelectedCurrency }) {
     const favorited = favoriteChange.some(favorite =>    
         favorite.initialCurrency === sendSelectedCurrency.code &&
         favorite.currencyChange === receiveSelectedCurrency.code
     );
     const [changeRatio, setChangeRatio] = useState(null)
-    const [sendInput, setSendInput] = useState(1)
 
     const loadChangeRatio = async () => {
         if (sendSelectedCurrency.code === receiveSelectedCurrency.code) return;
@@ -67,10 +66,11 @@ export default function Exchange({ addToHistory ,addToFavorite, favoriteChange, 
                         </div>
                     </div>
                     <button 
+                        aria-label="Switch Currencies"
                         onClick={exchangeCurrency}
                         className="self-center bg-neutral-700 p-4 rounded-lg border border-neutral-600 active:scale-[1.1] active:bg-lime-400" 
                     >
-                        <img className="active:brightness-0" src="/icon-exchange-vertical.svg" alt="" />
+                        <img className="active:brightness-0 md:scale-[1.2] md:rotate-z-90" src="/icon-exchange-vertical.svg" alt="" />
                     </button>
                     <div className="bg-neutral-700 p-4 rounded-2xl flex flex-col gap-4">
                         <h3 className="uppercase text-neutral-400">Receive</h3>
@@ -81,7 +81,7 @@ export default function Exchange({ addToHistory ,addToFavorite, favoriteChange, 
                                         readOnly
                                         className="w-full text-2xl placeholder-lime-400 px-2 py-1 rounded-lg focus:outline-none" 
                                         type="number" 
-                                        placeholder={sendSelectedCurrency.code === receiveSelectedCurrency.code ? 1 : (sendInput * changeRatio).toFixed(4)}/>
+                                        placeholder={sendSelectedCurrency.code === receiveSelectedCurrency.code ? 1 : (sendInput * changeRatio).toFixed(2)}/>
                                 </label>
                                 <SelectCurrencies currencies={currencies} selectedCurrency={receiveSelectedCurrency} setSelectedCurrency={setReceiveSelectedCurrency}/>
                             </div>

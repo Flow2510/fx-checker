@@ -5,7 +5,7 @@ import Favorited from "../favorited/favorited"
 import Log from "../log/log"
 import SelectInfos from "../selectinfos/selectinfos"
 
-export default function Infos({ history, setHistory, addToFavorite, favoriteChange, receiveSelectedCurrency, sendSelectedCurrency, popularRates, yesterdayPopularRates, currencies }) {
+export default function Infos({ sendInput, setSendInput, history, setHistory, addToFavorite, favoriteChange, receiveSelectedCurrency, sendSelectedCurrency, popularRates, yesterdayPopularRates, currencies }) {
     const [selectValue, setSelectValue] = useState("history")
 
     const categories = [
@@ -28,6 +28,8 @@ export default function Infos({ history, setHistory, addToFavorite, favoriteChan
             }
             {selectValue === "compare" &&
                 <Compare 
+                    sendInput={sendInput}
+                    setSendInput={setSendInput}
                     currencies={currencies}
                     sendSelectedCurrency={sendSelectedCurrency}
                 />

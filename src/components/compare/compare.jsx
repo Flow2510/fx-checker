@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { getPopularRate } from "../../services/api"
 import CompareItem from "../compareitem/compareitem"
 
-export default function Compare({ sendSelectedCurrency, currencies }){
+export default function Compare({ sendInput, sendSelectedCurrency, currencies }){
     const [list, setList] = useState()
     
     const loadRates = async () => {
@@ -23,13 +23,14 @@ export default function Compare({ sendSelectedCurrency, currencies }){
             <div className="flex-col flex gap-2">
                 <h3 className="flex gap-4 text-base uppercase">
                     <span className="text-neutral-400">Multi-Currency</span>
-                    <span>1,000 FROM {sendSelectedCurrency.code}</span>
+                    <span>{sendInput} FROM {sendSelectedCurrency.code}</span>
                 </h3>
                 <p className="text-xs text-neutral-400 uppercase">{rates.length} pairs</p>
             </div>
             <div className="flex flex-col gap-2">
                 {rates.map((r, i) => (
                     <CompareItem 
+                        sendInput={sendInput}
                         currencies={currencies}
                         sendSelectedCurrency={sendSelectedCurrency}
                         test={r}

@@ -5,6 +5,7 @@ import Infos from "../components/infos/infos";
 export default function HomePage({ currencies, popularRates, yesterdayPopularRates }) {
     const [sendSelectedCurrency, setSendSelectedCurrency] = useState({ "code": "USD", "name": "US Dollar", "country": "United States", "symbol": "$", "flag": "/flags/us.webp" })
     const [receiveSelectedCurrency, setReceiveSelectedCurrency] = useState({ "code": "EUR", "name": "Euro", "country": "Eurozone", "symbol": "€", "flag": "/flags/eu.webp" })
+    const [sendInput, setSendInput] = useState(1000)
     const [favoriteChange, setFavoriteChange] = useState(() => {
         const savedFavorites = localStorage.getItem("favoriteChange");
         return savedFavorites ? JSON.parse(savedFavorites) : [];
@@ -73,6 +74,8 @@ export default function HomePage({ currencies, popularRates, yesterdayPopularRat
         <main className="px-4 py-6 flex flex-col gap-8 max-w-275 m-auto md:px-6 md:py-8"
         >
             <Exchange 
+                sendInput={sendInput}
+                setSendInput={setSendInput}
                 addToHistory={addToHistory}
                 addToFavorite={addToFavorite}
                 favoriteChange={favoriteChange}
@@ -82,7 +85,9 @@ export default function HomePage({ currencies, popularRates, yesterdayPopularRat
                 receiveSelectedCurrency={receiveSelectedCurrency}
                 setReceiveSelectedCurrency={setReceiveSelectedCurrency}
             />
-            <Infos 
+            <Infos
+                sendInput={sendInput}
+                setSendInput={setSendInput} 
                 history={history}
                 setHistory={setHistory}
                 addToFavorite={addToFavorite}
@@ -101,4 +106,4 @@ export default function HomePage({ currencies, popularRates, yesterdayPopularRat
 
 // -remplir les inputs automatiquement quand on clique sur un favori ou sur une devise dans la liste compare
 // -verifier erreurs et les gérer 
-// -css pour tablettes et grands ecrans
+// -ameliorer perfs, UI/UX

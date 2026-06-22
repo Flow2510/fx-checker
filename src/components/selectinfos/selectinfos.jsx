@@ -15,20 +15,21 @@ export default function SelectInfos({ history, favoriteChange, setSelectValue, c
                 <div className="flex">
                     {categories.map((cat, i) => (
                         <button 
+                            type="button"
                             key={cat + i} 
                             onClick={() => setSelectValue(cat)}
-                            className={`p-4 flex items-center border-b cursor-pointer gap-2 ${cat === selectValue ? " border-lime-400" : "border-transparent"}`}
+                            className={`uppercase px-4 py-2 flex items-center border-b cursor-pointer gap-2 ${cat === selectValue ? " border-lime-400" : "border-transparent"}`}
                         >
                             <span>{cat}</span>
                             {cat === "favorite" &&
-                                <span className="p-1 bg-lime-400/50 rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                                <span className="p-1 bg-lime-400/30 rounded-full w-5 h-5 flex items-center justify-center text-xs">
                                     <span className="">
                                         {favoriteChange.length}
                                     </span>
                                 </span>
                             }
                             {cat === "log" &&
-                                <span className="p-1 bg-lime-400/50 rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                                <span className="p-1 bg-lime-400/30 rounded-full w-5 h-5 flex items-center justify-center text-xs">
                                     <span className="">
                                         {history.length}
                                     </span>
@@ -37,31 +38,23 @@ export default function SelectInfos({ history, favoriteChange, setSelectValue, c
                         </button>
                     ))}
                 </div>
-                <div className="h-px w-full bg-white/50"></div>
+                <div className="h-px w-full bg-white/30"></div>
             </div>
         :
         <div className="relative">
             <div className="w-full p-2 bg-neutral-800 rounded-lg relative z-5">
-                <button className="flex justify-between w-full items-center cursor-pointer" onClick={() => setIsOpen(prev => !prev)}>
+                <button type="button" className="flex justify-between w-full items-center cursor-pointer" onClick={() => setIsOpen(prev => !prev)}>
                     <p className="uppercase">{selectValue}</p>
                     <span className="text-xs">
-                        {isOpen ?
-                            <motion.i 
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.3 }}
-                                className="fa-solid fa-chevron-up"
-                            ></motion.i>
-                        :
-                            <motion.i 
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.3 }}
-                                className="fa-solid fa-chevron-down"
-                            ></motion.i>
-                        }
+                        <motion.img 
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.3 }}    
+                            className={`${isOpen? "rotate-z-180" : ""}`}
+                            src="/public/icon-chevron-down.svg" 
+                            alt="" 
+                        />
                     </span>
                 </button>
             </div>
@@ -76,6 +69,7 @@ export default function SelectInfos({ history, favoriteChange, setSelectValue, c
                     >
                         {categories.map((cat, i) => (
                             <button 
+                                type="button"
                                 key={cat + i} 
                                 value={cat} 
                                 className={`uppercase hover:text-white text-left cursor-pointer text-neutral-400${cat === selectValue ? " text-white" : ""}`} 
